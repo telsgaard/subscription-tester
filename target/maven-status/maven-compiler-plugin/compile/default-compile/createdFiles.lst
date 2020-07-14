@@ -1,0 +1,4 @@
+com\ims\tool\SOAPClient.class
+com\ims\tool\Response.class
+com\ims\tool\MTAS.class
+com\ims\tool\ResourcePaths.class
