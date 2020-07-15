@@ -70,9 +70,7 @@ public final class SOAPClient {
 		HttpParams params = httpClient.getParams();
 		params.setParameter(HttpConnectionParams.CONNECTION_TIMEOUT, TIMEOUT);
 
-		String url = URL;
-
-		PostMethod methodPost = new PostMethod(url);
+		PostMethod methodPost = new PostMethod(URL);
 		Response response = new Response();
 		try {
 			StringRequestEntity stringRequestEntity = new StringRequestEntity(envelope, CONTENT_TYPE,
