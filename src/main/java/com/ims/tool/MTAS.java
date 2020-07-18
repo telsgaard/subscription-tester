@@ -18,50 +18,46 @@ import javax.xml.xpath.XPathFactory;
 
 public class MTAS {
 
-    private static final Logger logger = Logger.getLogger(SOAPClient.class.getName());
+  private static final Logger logger = Logger.getLogger(SOAPClient.class.getName());
 
-    public static void main(String[] args){
+  public static void main(String[] args) {
 
-        try {
+    try {
 
-            Map<String, String> replacements = new HashMap<>();
-            replacements.put("${PublicId}", "sip_uri");
+      Map<String, String> replacements = new HashMap<>();
+      replacements.put("${PublicId}", "sip_uri");
 
-            SOAPClient client = new SOAPClient();
-            Response response = client.executeRequest(ResourcePaths.REQUEST_ENVELOP_XML, replacements);
-            String responseBody = response.getResponseBody();
-            String chargingProfile = findChargingProfile(responseBody);
-            logger.log(Level.INFO, "Charging profile : " + chargingProfile);
+      SOAPClient client = new SOAPClient();
+      Response response = client.executeRequest(ResourcePaths.REQUEST_ENVELOP_XML, replacements);
+      String responseBody = response.getResponseBody();
+      String chargingProfile = findChargingProfile(responseBody);
+      logger.log(Level.INFO, "Charging profile : " + chargingProfile);
 
-        }catch (Exception e) {
-            System.out.println("Error" + e);
-        }
-
+    } catch (Exception e) {
+      System.out.println("Error" + e);
     }
+  }
 
-    private static String findChargingProfile(String responseBody) {
+  private static String findChargingProfile(String responseBody) {
 
-        try {
+    try {
 
-            DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = domFactory.newDocumentBuilder();
-            Document document = builder.parse(IOUtils.toInputStream(responseBody, StandardCharsets.UTF_8));
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            XPathExpression expr = xpath.compile(
+      DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder = domFactory.newDocumentBuilder();
+      Document document =
+          builder.parse(IOUtils.toInputStream(responseBody, StandardCharsets.UTF_8));
+      XPathFactory xPathfactory = XPathFactory.newInstance();
+      XPath xpath = xPathfactory.newXPath();
+      XPathExpression expr =
+          xpath.compile(
+              "/Envelope/Body/GetResponse/MOAttributes/getResponseSubscription/services/user-common-data/ucd-operator-configuration/mmtel-charging-profile/text()");
 
-                    "/Envelope/Body/GetResponse/MOAttributes/getResponseSubscription/services/user-common-data/ucd-operator-configuration/mmtel-charging-profile/text()");
+      Object chargingProfile = expr.evaluate(document, XPathConstants.STRING);
+      return String.valueOf(chargingProfile);
 
-            Object chargingProfile = expr.evaluate(document, XPathConstants.STRING);
-            return String.valueOf(chargingProfile);
-
-        } catch (Exception e1) {
-            logger.log(Level.SEVERE, "Failed to get charging profile from response.", e1);
-            return null;
-
-        }
-
+    } catch (Exception e1) {
+      logger.log(Level.SEVERE, "Failed to get charging profile from response.", e1);
+      return null;
     }
-
-
+  }
 }
