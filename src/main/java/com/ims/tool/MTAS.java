@@ -16,6 +16,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+
+
 public class MTAS {
 
   private static final Logger logger = Logger.getLogger(SOAPClient.class.getName());
@@ -25,7 +27,7 @@ public class MTAS {
     try {
 
       Map<String, String> replacements = new HashMap<>();
-      replacements.put("${PublicId}", "sip_uri");
+      replacements.put("${PublicId}", "sip:+299567044@ims.mnc001.mcc290.3gppnetwork.org");
 
       SOAPClient client = new SOAPClient();
       Response response = client.executeRequest(ResourcePaths.REQUEST_ENVELOP_XML, replacements);
