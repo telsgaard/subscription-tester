@@ -27,9 +27,9 @@ public final class SOAPClient {
   private static final Charset CHARSET = StandardCharsets.UTF_8;
   private static final String CONTENT_TYPE = "text/xml";
   private static final int TIMEOUT = 2000;
-  private static final String USER = "user";
-  private static final String PASS = "psw";
-  private static final String URL = "http://127.0.0.1:8080/CAI3G1.2/services/CAI3G1.2";
+  private static final String USER = "em2tools";
+  private static final String PASS = "p@dEBsnscdZZc7TP";
+  private static final String URL = "http://10.44.80.40:8080/CAI3G1.2/services/CAI3G1.2";
 
   public Response executeRequest(String resourcePath, Map<String, String> replacements)
       throws Exception {
